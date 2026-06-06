@@ -3282,60 +3282,7 @@ Return ONLY a valid JSON array, no markdown, no explanation:
     } catch(e) { console.error('[BA] openStudyGroups error', e); }
   }
 
-  /* ── Inject Study Groups button into sidebar (next to Battle Arena btn) ── */
-  function _addStudyGroupSidebarBtn() {
-    if (document.getElementById('openStudyGroupBtn')) return;
-    const baBtn = document.getElementById('openBattleArenaBtn')
-               || document.querySelector('[id*="BattleArena"]')
-               || document.querySelector('[onclick*="openBattleArena"]');
-    if (!baBtn) return;
 
-    const sgBtn = document.createElement('button');
-    sgBtn.id = 'openStudyGroupBtn';
-
-    // Copy classes and base styles from battle arena button
-    if (baBtn.className) sgBtn.className = baBtn.className;
-
-    // Match the battle button's inner layout
-    sgBtn.innerHTML = `
-      <div class="battle-icon" style="font-size:18px;">👥</div>
-      <div style="display:flex;flex-direction:column;">
-        <span class="battle-label">Group Study AI</span>
-        <span class="battle-sub">Create groups · Invite students · Dashboard</span>
-      </div>`;
-
-    sgBtn.addEventListener('click', function() {
-      // Close drawer first
-      try {
-        const drawerOverlay = document.getElementById('drawerOverlay');
-        const drawer = document.getElementById('historyDrawer');
-        if (drawer) drawer.classList.remove('open');
-        if (drawerOverlay) drawerOverlay.classList.remove('active');
-        document.body.classList.remove('drawer-open');
-        if (typeof closeDrawer === 'function') closeDrawer();
-      } catch(e) {}
-      setTimeout(_openStudyGroups, 180);
-    });
-
-    baBtn.insertAdjacentElement('afterend', sgBtn);
-  }
-
-  // Try multiple times to ensure DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(_addStudyGroupSidebarBtn, 600);
-      setTimeout(_addStudyGroupSidebarBtn, 2000);
-    });
-  } else {
-    setTimeout(_addStudyGroupSidebarBtn, 600);
-    setTimeout(_addStudyGroupSidebarBtn, 2000);
-  }
-  // Also re-try on drawer opens in case DOM rebuilt
-  document.addEventListener('click', function(e) {
-    if (e.target && (e.target.id === 'menuBtn' || e.target.closest('#menuBtn'))) {
-      setTimeout(_addStudyGroupSidebarBtn, 300);
-    }
-  });
 
   console.info('[BattleArena] v3.2 — Battle tiers (Basic/Pro/Academy) + Group Study bridge loaded');
 
