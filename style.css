@@ -4991,6 +4991,52 @@ textarea.chat-input {
   -webkit-backdrop-filter: blur(20px) !important;
 }
 
+/* ── DESKTOP LAYOUT ENFORCEMENT ── */
+/* Ensure sidebar is always inline (not floating) on desktop */
+@media (min-width: 768px) {
+  body {
+    position: static !important;
+    overflow: hidden !important;
+  }
+
+  .app {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  .history-drawer {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    height: 100vh !important;
+    flex-shrink: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .chat-main {
+    flex: 1 !important;
+    min-width: 0 !important;
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  .drawer-overlay {
+    display: none !important;
+  }
+
+  .drawer-close {
+    display: none !important;
+  }
+}
+
 /* ── NEW CHAT BUTTON ── */
 .new-chat-btn,
 #newChatBtn {
